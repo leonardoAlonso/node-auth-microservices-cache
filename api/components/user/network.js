@@ -1,11 +1,13 @@
 const express = require('express');
 
-const response = require('../../../network/response')
+const response = require('../../../network/response');
+const controller = require('./controller');
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    response.success(req, res, "todo ok")
+    const lista = controller.list();
+    response.success(req, res, lista)
 });
 
 module.exports = router;
