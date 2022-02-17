@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const config = require('../config.js')
+const config = require('../config.js');
+const error = require('../utils/error');
 
 const secret = config.jwt.secret
 
@@ -18,7 +19,7 @@ const check = {
 
         //comprobar si es o no propio
         if (decoded.id != owner) {
-            throw new Error('You do not have permisions')
+            throw error('You do not have permisions', 401)
         }
     }
 }
@@ -26,11 +27,11 @@ const check = {
 function getToken(authorization) {
     // Bearer Token
     if (!authorization) {
-        throw new Error('No token');
+        throw error('No token', 500);
     }
 
     if (authorization.indexOf('Bearer ') == -1) {
-        throw new Error('Invalid format');
+        throw error('Invalid format', 500);
     }
 
     let token = authorization.replace('Bearer ', '');
