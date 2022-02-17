@@ -29,10 +29,8 @@ async function remove (table, id) {
 
 async function query (table, q) {
     let collection = await list(table);
-    console.log(collection)
     let keys = Object.keys(q);
     const key = keys[0];
-    console.log(key);
     return collection.filter(item => item[key] === q[key]) [0] || null
 }
 
