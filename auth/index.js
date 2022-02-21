@@ -15,12 +15,14 @@ function verify(token) {
 const check = {
     own: function (req, owner) {
         const decoded = decodeHeader(req);
-        console.log(decoded)
 
         //comprobar si es o no propio
         if (decoded.id != owner) {
             throw error('You do not have permisions', 401)
         }
+    },
+    logged: function (req) {
+        decodeHeader(req);
     }
 }
 

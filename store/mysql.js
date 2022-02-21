@@ -1,4 +1,3 @@
-const { defaultConfiguration } = require('express/lib/application');
 const mysql = require('mysql');
 
 const config = require('../config');
@@ -74,16 +73,25 @@ function insert(table, data) {
 }
 
 async function upsert (table, data) {
-    const row = await get(table, data.id)
+    let row = [];
+    if (data.id) {
+        row = await get(table, data.id)
+    }
     if (row.length > 0){
         return update(table, data)
     }
     return insert(table, data);
 }
 
-function query(table, query) {
+function query(table, query, join=false) {
+    let joinQuery = '';
+    if (join){
+        const key = Object.keys(join)[0];
+        const val = join[key];
+        joinQuery = `JOIN ${key} ON ${table}.${val} = ${key}.id`
+    }
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT * FROM ${table} WHERE ?`, query, (err, data) => {
+        connection.query(`SELECT * FROM ${table} ${joinQuery} WHERE ?`, query, (err, data) => {
             if (err) return reject(err);
             resolve(data[0] || null);
         })

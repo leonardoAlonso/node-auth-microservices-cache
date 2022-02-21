@@ -8,9 +8,14 @@ const router = express.Router();
 
 router.get('/', list)
 router.get('/:id', get)
-router.delete('/:id', remove)
+router.get('/:id/following', following)
+
 router.post('/', upset)
+router.post('/follow/:id', secure('logged'), follow)
+
 router.put('/', secure('update'), upset)
+
+router.delete('/:id', remove)
 
 function list (req, res, next) {
     controller.list()
@@ -43,5 +48,19 @@ function upset (req, res, next) {
         })
         .catch(next);
 };
+
+function follow(req, res, next) {
+    controller.follow(req.user.id, req.params.id)
+        .then((data) => {
+            response.success(req, res, data, 201)
+        }).catch(next)
+}
+
+function following(req, res, next) {
+    controller.following(req.params.id)
+    .then((data) => {
+        response.success(req, res, data, 201)
+    }).catch(next)
+}
 
 module.exports = router;
