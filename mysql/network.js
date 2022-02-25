@@ -1,5 +1,4 @@
 const express = require('express');
-const { append } = require('express/lib/response');
 
 const response = require('../network/response');
 const Store = require('../store/mysql');
@@ -20,6 +19,7 @@ async function get(req, res, next) {
     response.success(req, res, data, 200)
 }
 async function insert(req, res, next) {
+    console.log(req.body)
     const data = await Store.insert(req.params.table, req.body);
     response.success(req, res, data, 200)
 }

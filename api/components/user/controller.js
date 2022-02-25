@@ -11,6 +11,7 @@ module.exports = function(injectedStore) {
     }
 
     function list () {
+        console.log(store)
         return store.list(TABLE);
     }
 
@@ -36,7 +37,7 @@ module.exports = function(injectedStore) {
                 password: body.password
             })
         }
-
+        console.log("user", user)
         return store.upsert(TABLE, user);
     }
 

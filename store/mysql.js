@@ -45,6 +45,7 @@ function list (table) {
 }
 
 function get(table, id) {
+    console.log(id)
     return new Promise((resolve, reject) => {
         connection.query(`SELECT * FROM ${table} WHERE id='${id}'`, (err, data) => {
             if (err) return reject(err);
@@ -63,6 +64,7 @@ function update(table, data) {
 }
 
 function insert(table, data) {
+    console.log(data)
     return new Promise((resolve, reject) => {
         connection.query(`INSERT INTO ${table} SET ?`, data, (err, result) => {
             console.log(err)
