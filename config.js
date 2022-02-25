@@ -12,6 +12,10 @@ module.exports = {
         database: process.env.MYSQL_DB || 'node_microservices',
     },
     mysqlService: {
+        host: process.MYSQL_SERVICE_HOST || 'localhost',
         port: process.env.MYSQL_SERVICE_PORT || 3001
+    },
+    post:{
+        port: process.env.POST_PORT || 3002
     }
 }
